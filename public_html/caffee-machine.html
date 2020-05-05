@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Coffee Mashine - javaScript Homework</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Andjela Ljubinac">
+        <meta name="description" content="Make coffee machine">
+        <meta name="keywords" content="Cofee, machine, Coffee machine, javascript">
+        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div id="caffe-mashine">
+            <div id="caffe-screen" class="d-flex flex-column justify-between">
+                <p>Credit: <span id="credit">    </span> RSD</p>
+                <p id="message" class="text-center">DISPLAY MESAGE</p>
+
+                <p id="status">Water: <span id="water-status">  </span> Coffe: <span id="coffee-status"> </span> Milk: <span id="milk-status"> </span></p>
+            </div>
+            <div>
+
+            </div>
+            <button id="add-credit" class="d-block" onclick="coffeeMachine.addCredit();">Add Credit</button>
+            <div class="d-flex justify-between">
+                <button id="add-water"  onclick="coffeeMachine.addWater();">ADD WATER</button>
+                <button id="add-coffee"  onclick="coffeeMachine.addCoffee();">ADD COFFEE</button>
+                <button id="add-milk"  onclick="coffeeMachine.addMilk();">ADD MILK</button>
+            </div>
+            <div class="d-flex justify-between">
+                <button id="short-espresso" onclick="coffeeMachine.makeShortEspresso();">Short Espreso</button>
+                <button id="long-espresso" onclick="coffeeMachine.makeLongEspresso();">Long Espreso</button>
+                <button id="capuchino" onclick="coffeeMachine.makeCapuchino();">Capuchino</button>
+            </div>
+        </div>
+
+
+
+        <script>
+
+
+
+            // Create object coffeeMaschine below
+
+
+            //Object Coffee machine
+            let coffeeMachine = {
+                //Attributes - Initial values
+                water: 400,
+                coffee: 200,
+                milk: 100,
+                credit: 100,
+
+                //WATER
+                //Method which sets Water status into the field
+                waterStatus: function () {
+                    setValue('water-status', this.water);
+                },
+                //Method which adds water 
+                addWater: function () {
+                    //Insert water
+                    let water = Math.round(Number(prompt('Please add water!')));
+                    //Check amount of water
+                    if (isNaN(water)) {
+                        //Check if is not a number
+                        displayMessage('Please enter valid number!');
+                        this.addWater();
+                    } else if ((this.water + water) > 400) {
+                        //Check if is more than 400
+                        setValue('message', 'The Machine has enough water!');
+                    } else {
+                        //New water status
+                        this.water += water;
+                        setValue('water-status', this.water);
+                    }
+
+
+                    //Call method water status 
+                    this.waterStatus();
+                },
+                //Method which empty water
+                emptyWater: function (water) {
+
+                    //Checking current and forwarded status of water
+                    if (!(this.water >= water)) {
+                        setValue('message', 'There is not enough water in the machine!');
+                        return;
+                    } else {
+                        //Reduce water
+                        this.water -= water;
+                        //Call water status
+                        this.waterStatus();
+                        //Set info for this action 
+                        setValue('message', 'Pouring water');
+                    }
+                    ;
+                },
+
+                //COFFEE
+                //Method which get and sets Coffee status into the field
+                coffeeStatus: function () {
+                    setValue('coffee-status', this.coffee);
+                },
+                //Method which adds coffee 
+                addCoffee: function () {
+                    //Insert coffee
+                    let coffee = Math.round(Number(prompt('Please add coffee!')));
+                    //Check quantity of coffee
+                    if (isNaN(coffee)) {
+                        //Check if is not a number
+                        displayMessage('Please enter valid number!');
+                        this.addCoffee();
+                    } else if ((this.coffee + coffee) > 200) {
+                        //Check if is more than 200
+                        setValue('message', 'The Machine has enough coffee!');
+                    } else {
+                        //New coffee status
+                        this.coffee += coffee;
+                        setValue('coffee-status', this.coffee);
+                    }
+
+
+                    //Call method coffee status 
+                    this.coffeeStatus();
+                },
+                //Method which empty coffee
+                emptyCoffee: function (coffee) {
+
+                    //Checking current and forwarded status of coffee
+                    if (!(this.coffee >= coffee)) {
+                        setValue('message', 'There is not enough coffee in the machine!');
+                        return;
+                    } else {
+                        //Reduce coffee
+                        this.coffee -= coffee;
+                        //Call coffee status
+                        this.coffeeStatus();
+                        //Set info for this action 
+                        setValue('message', 'Pouring coffee');
+                    }
+                    ;
+                },
+
+                //MILK
+                //Method which sets Water status into the field
+                milkStatus: function () {
+                    setValue('milk-status', this.milk);
+                },
+                //Method which adds milk 
+                addMilk: function () {
+                    //Insert milk
+                    let milk = Math.round(Number(prompt('Please add milk!!!')));
+                    //Check amount of milk
+                    if (isNaN(milk)) {
+                        //Check if is not a number
+                        displayMessage('Please enter valid number!');
+                        this.addMilk();
+                    } else if ((this.milk + milk) > 100) {
+                        //Check if is more than 100
+                        setValue('message', 'The Machine has enough milk!!!');
+                    } else {
+                        //New milk status
+                        this.milk += milk;
+                        setValue('milk-status', this.milk);
+                    }
+
+
+                    //Call method milk status 
+                    this.milkStatus();
+                },
+                //Method which empty milk
+                emptyMilk: function (milk) {
+
+                    //Checking current and forwarded status of milk
+                    if (!(this.milk >= milk)) {
+                        setValue('message', 'Machine is out of Milk!!');
+                        return;
+                    } else {
+                        //Reduce milk
+                        this.milk -= milk;
+                        //Call milk status
+                        this.milkStatus();
+                        //Set info for this action 
+                        setValue('message', 'Pouring milk');
+                    }
+                    ;
+                },
+
+                //CREDIT
+                //Method which sets Credit status into the field
+                creditStatus: function () {
+                    setValue('credit', this.credit);
+                },
+                //Method which adds credit 
+                addCredit: function () {
+                    let credit = Math.round(Number(prompt('Please enter the credit!')));
+                    //Check the loan of credit
+                    if (isNaN(credit)) {
+                        //Check if is not a number
+                        displayMessage('Please enter valid number!');
+                        this.addCredit();
+                    } else {
+                        //New credit status
+                        this.credit += credit;
+                        setValue('credit', this.credit);
+                    }
+
+
+                    //Call method milk status 
+                    this.milkStatus();
+                },
+                //Method which empty credit
+                emptyCredit: function (credit) {
+
+                    //Checking current and forwarded status of credit
+                    if (!(this.credit >= credit)) {
+                        setValue('message', 'Not enough credit!');
+                        return;
+                    } else {
+                        //Reduce credit
+                        this.credit -= credit;
+                        //Call credit status
+                        this.creditStatus();
+                        //Set info for this action 
+                        setValue('message', 'Pouring credit');
+                        return;
+                    }
+                },
+
+                //MAKE SCHORT ESPRESSO
+                //Method which makes short espresso
+                makeShortEspresso: function () {
+
+                    //Check if has enough credit
+                    if (!(this.credit >= 30)) {
+                        //Call empty credit 
+                        this.emptyCredit(30);
+                        return;
+                    }
+                    //Check if has enough water
+                    if (!(this.water >= 20)) {
+                        //Call empty water 
+                        this.emptyWater(20);
+                        return;
+                    }
+                    //Check if has enough coffee
+                    if (!(this.coffee >= 10)) {
+                        //Call empty coffee 
+                        this.emptyCoffee(10);
+                        return;
+                    }
+
+
+                    //If has enough credit, water and coffee add info 
+                    setTimeout(function () {
+                        setValue('message', 'Preparing Short esspresso');
+                    }, 0);
+                    //Reduce status of credit, water, coffee and milk
+                    setTimeout(this.emptyCredit.bind(this), 1000, 30);
+                    setTimeout(this.emptyWater.bind(this), 2000, 20);
+                    setTimeout(this.emptyCoffee.bind(this), 3000, 10);
+                    //Set info message when finished Short espresso
+                    setTimeout(function () {
+                        setValue('message', 'Short esspresso finished!');
+                    }, 4000);
+
+                },
+
+                //MAKE LONG ESPRESSO
+                //Method which makes long espresso
+                makeLongEspresso: function () {
+
+                    //Check if has enough credit
+                    if (!(this.credit >= 40)) {
+                        //Call empty credit 
+                        this.emptyCredit(40);
+                        return;
+                    }
+                    //Check if has enough water
+                    if (!(this.water >= 40)) {
+                        //Call empty water 
+                        this.emptyWater(40);
+                        return;
+                    }
+                    //Check if has enough coffee
+                    if (!(this.coffee >= 10)) {
+                        //Call empty coffee 
+                        this.emptyCoffee(10);
+                        return;
+                    }
+
+                    //If has enough credit, water and coffee add info 
+                    setTimeout(function () {
+                        setValue('message', 'Preparing Long esspresso');
+                    }, 0);
+                    //Reduce status of credit, water and coffee
+                    setTimeout(this.emptyCredit.bind(this), 1000, 40);
+                    setTimeout(this.emptyWater.bind(this), 2000, 40);
+                    setTimeout(this.emptyCoffee.bind(this), 3000, 10);
+                    setTimeout(function () {
+                        setValue('message', 'Long esspresso finished!');
+                    }, 4000);
+                },
+
+                //MAKE CAPUCHINO ESPRESSO
+                //Method which makes long espresso
+                makeCapuchino: function () {
+
+                    //Check if has enough credit
+                    if (!(this.credit >= 50)) {
+                        //Call empty credit 
+                        this.emptyCredit(50);
+                        return;
+                    }
+                    //Check if has enough water
+                    if (!(this.water >= 20)) {
+                        //Call empty water 
+                        this.emptyWater(20);
+                        return;
+                    }
+                    //Check if has enough coffee
+                    if (!(this.coffee >= 10)) {
+                        //Call empty coffee 
+                        this.emptyCoffee(10);
+                        return;
+                    }
+                    //Check if has enough milk
+                    if (!(this.milk >= 10)) {
+                        //Call empty milk 
+                        this.emptyMilk(10);
+                        return;
+                    }
+
+                    //If has enough credit, water and coffee add info 
+                    setTimeout(function () {
+                        setValue('message', 'Preparing Capuchino');
+                    }, 0);
+                    //Reduce status of credit, water, coffee and milk
+                    setTimeout(this.emptyCredit.bind(this), 1000, 50);
+                    setTimeout(this.emptyWater.bind(this), 2000, 20);
+                    setTimeout(this.emptyCoffee.bind(this), 3000, 10);
+                    setTimeout(this.emptyMilk.bind(this), 4000, 10);
+                    //Set info message when finished Long espresso
+                    setTimeout(function () {
+                        setValue('message', 'Capuchino finished!');
+                    }, 5000);
+                }
+            };
+
+
+
+
+            //Call function on document load
+            coffeeMachine.waterStatus();
+            coffeeMachine.coffeeStatus();
+            coffeeMachine.milkStatus();
+            coffeeMachine.creditStatus();
+
+
+
+
+            //Auxiliary function
+            //Function - Set value
+            function setValue(elementID, text) {
+                return document.getElementById(elementID).innerText = text;
+            }
+
+            //Function - Display message in alert
+            function displayMessage(message) {
+                alert(message);
+            }
+        </script>
+    </body>
+</html>
